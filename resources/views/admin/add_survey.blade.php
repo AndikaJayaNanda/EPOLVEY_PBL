@@ -1,22 +1,12 @@
 @extends('layouts.app')
 @section('content')
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Survey</title>
-    @vite('resources/css/app.css')
-</head>
-<div class="antialiased sans-serif min-h-screen">
-    <div class="min-h-screen p-6 md:ml-64 block">
-<body class="bg-gray-100 font-sans">
+
     <div class="min-h-screen flex items-start justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div class="max-w-md w-full space-y-8">
             <div>
-                <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">Create a New Survey</h2>
+                <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900 font-poppins">Create a New Survey</h2>
                 <p class="mt-2 text-center text-sm text-gray-600">
-                    Fill in the details below to create a new survey
+                    
                 </p>
             </div>
             
@@ -93,6 +83,5 @@
     
 </div>
 </div>
-</body>
-</html>
+
 @endsection

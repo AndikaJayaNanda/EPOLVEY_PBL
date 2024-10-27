@@ -15,29 +15,24 @@
             <nav class="mt-8">
                 <ul>
                     <li class="mb-4">
-                        <a href="{{ route('dosen.dashboard') }}" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100">
+                        <a href="{{ route('dosen.dashboard') }}" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 {{ request()->routeIs('dosen.dashboard') ? 'bg-blue-100 font-bold text-blue-600' : '' }}">
                             <ion-icon name="easel-outline"></ion-icon>
-                            <span class="ml-4">Overview</span>
+                            <span class="ml-4">Dashboard</span>
                         </a>
                     </li>
                     <li class="mb-4">
-                        <a href="dosen.result" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100">
-                            <ion-icon name="create-outline"></ion-icon>
+                        <a href="{{ route('dosen.result') }}" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 {{ request()->routeIs('dosen.result') ? 'bg-blue-100 font-bold text-blue-600' : '' }}">
+                            <ion-icon name="clipboard-outline"></ion-icon>
                             <span class="ml-4">Result</span>
                         </a>
                     </li>
                     <li class="mb-4">
-                        <a href="dosen.detail_result" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100">
-                            <ion-icon name="documents-outline"></ion-icon>
-                            <span class="ml-4">Detail Result</span>
-                        </a>
-                    </li>
-                    <li class="mb-4">
-                        <a href="dosen.profil" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100">
+                        <a href="{{ route('dosen.profil') }}" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 {{ request()->routeIs('dosen.profil') ? 'bg-blue-100 font-bold text-blue-600' : '' }}">
                             <ion-icon name="person-outline"></ion-icon>
                             <span class="ml-4">Profile</span>
                         </a>
                     </li>
+                   
                     <div class="flex items-center justify-center">
                         <a href="{{ route('logout') }}"
                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();"

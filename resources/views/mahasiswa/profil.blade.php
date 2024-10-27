@@ -1,15 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profil Mahasiswa</title>
-    @vite('resources/css/app.css')
-</head>
-<body class="bg-gray-100">
+
     <div class="flex-1 p-6 mx-auto max-w-4xl">
         <h1 class="text-2xl font-bold text-gray-800 flex justify-center font-poppins mb-6">Profil Mahasiswa</h1>
 
@@ -35,6 +27,5 @@
             </div>
         </div>
     </div>
-</body>
-</html>
+
 @endsection

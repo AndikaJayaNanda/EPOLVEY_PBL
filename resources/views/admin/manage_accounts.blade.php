@@ -11,12 +11,7 @@
 
             <!-- Search Bar and Buttons -->
             <div class="mb-4 flex justify-between items-center space-x-4">
-                <input 
-                    type="text" 
-                    id="searchInput" 
-                    class="px-4 py-2 rounded-lg border border-gray-300" 
-                    placeholder="Cari Nama atau Email..." 
-                    onkeyup="filterTable()" />
+                <input type="text" id="searchInput" class="px-4 py-2 rounded-lg border border-gray-300" placeholder="Cari Nama atau Email..." onkeyup="filterTable()" />
                 
                 <div class="flex items-center space-x-2">
                     <a href="{{ route('admin.account_create') }}" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Add Account</a>
@@ -42,7 +37,6 @@
                         <tr>
                             <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
                             <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama</th>
-                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
                             <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
                             <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
                         </tr>
@@ -52,8 +46,9 @@
                         <tr>
                             <td class="px-4 py-4 border-b border-gray-200">{{ $profil->id }}</td>
                             <td class="px-4 py-4 border-b border-gray-200">{{ $profil->name }}</td>
-                            <td class="px-4 py-4 border-b border-gray-200">{{ $profil->email }}</td>
                             <td class="px-4 py-4 border-b border-gray-200">{{ $profil->role }}</td>
+                            <!-- Hidden cell for updated_at to use in sorting -->
+                            <td class="px-4 py-4 border-b border-gray-200 hidden" data-updated="{{ $profil->updated_at }}">{{ $profil->updated_at }}</td>
                             <td class="px-4 py-4 border-b border-gray-200">
                                 <a href="{{ route('admin.account_edit', $profil->id) }}" class="text-blue-600 hover:underline">Edit</a>
                                 <form action="{{ route('admin.account_delete', $profil->id) }}" method="POST" style="display:inline;" onsubmit="return confirmDelete()">
@@ -72,14 +67,14 @@
 </div>
 
 <script>
-    // Fungsi konfirmasi sebelum menghapus akun
+    // Confirmation before deletion
     function confirmDelete() {
         return confirm('Apakah Anda yakin ingin menghapus akun ini? Tindakan ini tidak dapat dibatalkan.');
     }
 
-    // Fungsi pencarian
+    // Search function
     function filterTable() {
-        var input, filter, table, tr, tdName, tdEmail, i, txtValueName, txtValueEmail;
+        var input, filter, table, tr, tdName, i, txtValueName;
         input = document.getElementById("searchInput");
         filter = input.value.toLowerCase();
         table = document.getElementById("studentTable");
@@ -87,21 +82,19 @@
 
         for (i = 1; i < tr.length; i++) {
             tr[i].style.display = "none";
-            tdName = tr[i].getElementsByTagName("td")[1]; // Kolom Nama
-            tdEmail = tr[i].getElementsByTagName("td")[2]; // Kolom Email
+            tdName = tr[i].getElementsByTagName("td")[1]; // Name column
 
-            if (tdName || tdEmail) {
+            if (tdName) {
                 txtValueName = tdName.textContent || tdName.innerText;
-                txtValueEmail = tdEmail.textContent || tdEmail.innerText;
 
-                if (txtValueName.toLowerCase().indexOf(filter) > -1 || txtValueEmail.toLowerCase().indexOf(filter) > -1) {
+                if (txtValueName.toLowerCase().indexOf(filter) > -1) {
                     tr[i].style.display = "";
                 }
             }
         }
     }
 
-    // Fungsi sorting
+    // Sorting function
     function applySort() {
         var table, rows, switching, i, x, y, shouldSwitch;
         table = document.getElementById("studentTable");
@@ -115,14 +108,15 @@
             for (i = 1; i < (rows.length - 1); i++) {
                 shouldSwitch = false;
 
-                // Sorting by update date
+                // Sorting by last_update or oldest_update
                 if (sortType === "last_update" || sortType === "oldest_update") {
-                    x = rows[i].getElementsByTagName("TD")[4];
-                    y = rows[i + 1].getElementsByTagName("TD")[4];
-                    if (sortType === "last_update" && new Date(x.innerHTML) < new Date(y.innerHTML)) {
+                    x = rows[i].querySelector("td[data-updated]").dataset.updated;
+                    y = rows[i + 1].querySelector("td[data-updated]").dataset.updated;
+
+                    if (sortType === "last_update" && new Date(x) < new Date(y)) {
                         shouldSwitch = true;
                         break;
-                    } else if (sortType === "oldest_update" && new Date(x.innerHTML) > new Date(y.innerHTML)) {
+                    } else if (sortType === "oldest_update" && new Date(x) > new Date(y)) {
                         shouldSwitch = true;
                         break;
                     }
@@ -130,12 +124,9 @@
 
                 // Sorting A-Z or Z-A by name
                 if (sortType === "az" || sortType === "za") {
-                    x = rows[i].getElementsByTagName("TD")[1];
-                    y = rows[i + 1].getElementsByTagName("TD")[1];
-                    if (sortType === "az" && x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-                        shouldSwitch = true;
-                        break;
-                    } else if (sortType === "za" && x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                    x = rows[i].getElementsByTagName("TD")[1].innerHTML.toLowerCase();
+                    y = rows[i + 1].getElementsByTagName("TD")[1].innerHTML.toLowerCase();
+                    if ((sortType === "az" && x > y) || (sortType === "za" && x < y)) {
                         shouldSwitch = true;
                         break;
                     }
