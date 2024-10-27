@@ -2,7 +2,6 @@
 @section('content')
 
 
-<div class="flex flex-col h-screen border-2">
   <div class="antialiased sans-serif min-h-screen ">
     <div class="min-h-screen p-6 md:ml-64 block">
       
