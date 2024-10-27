@@ -43,35 +43,55 @@
                             <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        @foreach ($profils as $index => $profil)
-                        <tr data-updated="{{ $profil->updated_at }}">
-                            <td class="px-4 py-4 border-b border-gray-200">{{ $index + 1 }}</td>
-                            <td class="px-4 py-4 border-b border-gray-200">{{ $profil->name }}</td>
-                            <td class="px-4 py-4 border-b border-gray-200">{{ $profil->role }}</td>
-                            <td class="px-4 py-4 border-b border-gray-200">
-                                <a href="{{ route('admin.account_edit', $profil->id) }}" class="text-blue-600 hover:underline">Edit</a>
-                                <form action="{{ route('admin.account_delete', $profil->id) }}" method="POST" style="display:inline;" onsubmit="return confirmDelete()">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="text-red-600 hover:underline ml-2">Delete</button>
-                                </form>
-                            </td>   
-                        </tr>
-                        @endforeach
-                    </tbody>
+                    <table id="studentTable" class="min-w-full bg-white border border-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Username</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Lengkap</th> <!-- Nama Lengkap -->
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($profils as $index => $profil)
+                            <tr data-updated="{{ $profil->updated_at }}">
+                                <td class="px-4 py-4 border-b border-gray-200">{{ $index + 1 }}</td>
+                                <td class="px-4 py-4 border-b border-gray-200">{{ $profil->username }}</td>
+                                <td class="px-4 py-4 border-b border-gray-200">
+                                    @if($profil->role === 'Mahasiswa')
+                                        {{ $profil->mahasiswa_name }}
+                                    @elseif($profil->role === 'Dosen')
+                                        {{ $profil->dosen_name }}
+                                    @else
+                                        -
+                                    @endif
+                                </td>
+                                <td class="px-4 py-4 border-b border-gray-200">{{ $profil->role }}</td>
+                                <td class="px-4 py-4 border-b border-gray-200">
+                                    <a href="{{ route('admin.account_edit', $profil->id) }}" class="text-blue-600 hover:underline">Edit</a>
+                                    <form action="{{ route('admin.account_delete', $profil->id) }}" method="POST" style="display:inline;" onsubmit="return confirmDelete()">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="text-red-600 hover:underline ml-2">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    
+                    
                 </table>
             </div>
 
             <!-- Pagination -->
             <div class="flex justify-between items-center mt-4 text-sm text-gray-600">
-                <span>Showing data 1 to 8 of 25K entries</span>
-                <div class="flex space-x-2">
-                    <button class="px-3 py-1 rounded bg-gray-200 text-gray-600">1</button>
-                    <button class="px-3 py-1 rounded bg-gray-100 text-gray-600">2</button>
-                    <button class="px-3 py-1 rounded bg-gray-100 text-gray-600">3</button>
-                    <span class="px-3 py-1 text-gray-500">...</span>
-                    <button class="px-3 py-1 rounded bg-gray-100 text-gray-600">46</button>
+                <div class="flex justify-between items-center mt-4 text-sm text-gray-600">
+                    <span>Showing data {{ $profils->firstItem() }} to {{ $profils->lastItem() }} of {{ $profils->total() }} entries</span>
+                    <div>
+                        {{ $profils->links() }}
+                    </div>
                 </div>
             </div>
         </div>

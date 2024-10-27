@@ -52,7 +52,7 @@ public function update(Request $request, $id)
     $request->validate([
         'name' => 'required|string|max:255',
         'password' => 'nullable|string|min:6',
-        'role' => 'required|in:Admin,Dosen,Mahasiswa', // Validasi untuk role
+        'role' => 'required|in:Admin,Dosen,Mahasiswa',
     ]);
 
     $profil = User::findOrFail($id);

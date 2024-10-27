@@ -25,7 +25,17 @@ class AdminController extends Controller
     }
     public function manage_accounts()
     {
-        $profils = User::all();
+        $profils = User::leftJoin('profil_mahasiswa', 'users.id', '=', 'profil_mahasiswa.id_user')
+        ->leftJoin('dosen', 'users.name', '=', 'dosen.name')
+        ->select(
+            'users.id',
+            'users.role',
+            'users.name as username', // username dari tabel users
+            'profil_mahasiswa.name as mahasiswa_name', // nama lengkap mahasiswa
+            'dosen.nama_dosen as dosen_name' // nama lengkap dosen
+        )
+        ->paginate(10);
+
         return view('admin.manage_accounts', compact('profils')); 
     }
     public function add_survey()
