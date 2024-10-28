@@ -48,8 +48,17 @@ class AdminController extends Controller
     }
     public function profil()
     {
-        return view('admin.profil'); 
+        // Tarik data admin dari tabel users berdasarkan role
+        $admin = User::where('role', 'Admin')->first();
+
+        // Pastikan data ditemukan sebelum mengirim ke view
+        if (!$admin) {
+            abort(404, 'Admin profile not found.');
+        }
+
+        return view('admin.profil', compact('admin'));
     }
+    
     public function jadwal()
     {
         return view('admin.jadwal'); 

@@ -34,15 +34,6 @@
 
             <!-- Table -->
             <div class="overflow-x-auto bg-white shadow-lg rounded-lg">
-                <table id="studentTable" class="min-w-full bg-white border border-gray-200">
-                    <thead class="bg-gray-50">
-                        <tr>
-                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No</th>
-                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama</th>
-                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
-                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
-                        </tr>
-                    </thead>
                     <table id="studentTable" class="min-w-full bg-white border border-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
@@ -80,9 +71,6 @@
                             @endforeach
                         </tbody>
                     </table>
-                    
-                    
-                </table>
             </div>
 
             <!-- Pagination -->

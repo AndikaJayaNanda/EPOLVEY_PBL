@@ -12,16 +12,19 @@ class Jadwal extends Model
     protected $table = 'jadwal';
 
     protected $fillable = [
-        'semester',
+        'kode_matakuliah',
+        'nama_matakuliah',
+        'name',
         'kelas',
-        'mata_kuliah',
-        'id_dosen',
-        'dosen_pengampu',
+        'semester'
     ];
 
-    // Relasi ke tabel 'users' berdasarkan name sebagai foreign key
+    /**
+     * Relasi dengan model Dosen.
+     * Menghubungkan foreign key `name` di tabel `jadwal` dengan kolom `name` di tabel `dosen`.
+     */
     public function dosen()
     {
-        return $this->belongsTo(User::class, 'id_dosen', 'name');
+        return $this->belongsTo(Dosen::class, 'name', 'name');
     }
 }

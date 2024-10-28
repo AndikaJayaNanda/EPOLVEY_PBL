@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\MahasiswaSurveyController;
 use App\Http\Controllers\PertanyaanController;
@@ -84,24 +85,31 @@ Route::prefix('admin')->middleware(['auth','role:Admin'])->group(function () {
     Route::get('/result_survey', [AdminController::class, 'result_survey'])
         ->name('admin.result_survey');
 
-    Route::get('/jadwal', [AdminController::class, 'jadwal'])
+    //Jadwal
+    Route::get('/jadwal', [JadwalController::class, 'index'])
         ->name('admin.jadwal');
+    Route::get('/jadwal/create', [JadwalController::class, 'create'])
+        ->name('jadwal.create');
+    Route::post('/jadwal', [JadwalController::class, 'store'])
+        ->name('jadwal.store');
+    Route::get('/jadwal/{id}/edit', [JadwalController::class, 'edit']) 
+        ->name('jadwal.edit');
+    Route::put('/jadwal/{id}', [JadwalController::class, 'update'])
+        ->name('jadwal.update');
+
 
     Route::get('/profil', [AdminController::class, 'profil'])
         ->name('admin.profil');
 
-        Route::get('/accounts/create', [AccountController::class, 'create'])
+    //Account
+    Route::get('/accounts/create', [AccountController::class, 'create'])
         ->name('admin.account_create');
-
     Route::post('/accounts/store', [AccountController::class, 'store'])
         ->name('admin.account_store');
-
     Route::get('/accounts/{id}/edit', [AccountController::class, 'edit'])
         ->name('admin.account_edit');
-
     Route::put('/accounts/{id}', [AccountController::class, 'update'])
         ->name('admin.account_update');
-
     Route::delete('/accounts/{id}', [AccountController::class, 'destroy'])
         ->name('admin.account_delete');    
 

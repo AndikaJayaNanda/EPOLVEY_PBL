@@ -14,7 +14,7 @@ return new class extends Migration
     Schema::create('jadwal', function (Blueprint $table) {
         $table->id();
         $table->enum('semester', ['1', '2', '3', '4', '5', '6']);
-        $table->string('kelas', 50);
+        $table->string('kelas', 50)->nullable();
         $table->string('mata_kuliah', 100);
         $table->unsignedBigInteger('id_dosen')->unique(); // Menggunakan name dari user sebagai foreign key
         $table->string('dosen_pengampu', 100);

@@ -23,4 +23,8 @@ class Dosen extends Model
     {
         return $this->belongsTo(User::class, 'name');
     }
+    public function jadwals()
+    {
+        return $this->hasMany(Jadwal::class, 'name', 'name');
+    }
 }

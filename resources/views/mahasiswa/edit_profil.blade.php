@@ -11,8 +11,8 @@
                     @method('PUT')
 
                     <div class="mb-6">
-                        <label for="name" class="block text-sm font-medium text-gray-700">NIM</label>
-                        <input id="name" name="name" type="text" value="{{ old('name', $mahasiswa->name) }}" required readonly class="appearance-none rounded-md relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Masukkan nama lengkap Anda">
+                        <label for="name" class="block text-sm font-medium text-gray-700">Nama</label>
+                        <input id="name" name="name" type="text" value="{{ old('name', $mahasiswa->name) }}"  class="appearance-none rounded-md relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Masukkan nama lengkap Anda">
                     </div>
 
                     <div class="mb-6">
