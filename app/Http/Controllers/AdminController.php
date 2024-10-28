@@ -4,16 +4,25 @@ namespace App\Http\Controllers;
 use App\Models\Survey;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\Answer;
+
 
 class AdminController extends Controller
 {
     public function index()
     {
-        $surveys = Survey::all(); // Atau gunakan Survey::paginate() jika datanya banyak
-
-        // Kirim data ke view dashboard.blade.php
-        return view('admin.dashboard', compact('surveys'));
+        $surveys = Survey::all(); // Fetch all surveys
+        $totalMahasiswa = User::where('role', 'Mahasiswa')->count(); // Total students
+        $totalSudahMengisi = Answer::distinct('user_id')->count('user_id'); // Total unique students who completed survey
+    
+        // Hitung mahasiswa yang belum mengisi survei
+        $totalBelumMengisi = $totalMahasiswa - $totalSudahMengisi;
+    
+        // Kirim data ke tampilan dashboard
+        return view('admin.dashboard', compact('surveys', 'totalMahasiswa', 'totalSudahMengisi', 'totalBelumMengisi'));
     }
+    
+    
     public function create_survey()
     {
         $surveys = Survey::all();
@@ -34,7 +43,7 @@ class AdminController extends Controller
             'profil_mahasiswa.name as mahasiswa_name', // nama lengkap mahasiswa
             'dosen.nama_dosen as dosen_name' // nama lengkap dosen
         )
-        ->paginate(10);
+        ->paginate(6);
 
         return view('admin.manage_accounts', compact('profils')); 
     }

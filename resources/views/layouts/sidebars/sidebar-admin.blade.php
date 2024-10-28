@@ -44,12 +44,6 @@
                             <span class="ml-4">Jadwal</span>
                         </a>
                     </li>
-                    <li class="mb-4">
-                        <a href="{{ route('admin.profil') }}" class="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-100 {{ request()->routeIs('admin.profil') ? 'bg-blue-100 font-bold text-blue-600' : '' }}">
-                            <ion-icon name="person-outline"></ion-icon>
-                            <span class="ml-4">Profile</span>
-                        </a>
-                    </li>
                     <div class="flex items-center justify-center">
                         <a href="{{ route('logout') }}"
                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();"

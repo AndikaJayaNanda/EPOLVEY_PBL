@@ -11,31 +11,34 @@
 
                 <!-- Box 1 -->
                 <div class="bg-white shadow-lg rounded-lg p-4 md:p-6">
-                    <h3 class="text-base md:text-lg font-semibold text-gray-800 mb-2 md:mb-4">Total Sales</h3>
-                    <p class="text-2xl md:text-3xl font-bold text-blue-600">75%</p>
-                    <div class="mt-1 md:mt-2 text-xs md:text-sm text-gray-500">Compared to last month</div>
+                    <h3 class="text-base md:text-lg font-semibold text-gray-800 mb-2 md:mb-4">Total Mahasiswa</h3>
+                    <p class="text-2xl md:text-3xl font-bold text-blue-600">{{ $totalMahasiswa }}</p>
+                    <div class="mt-1 md:mt-2 text-xs md:text-sm text-gray-500">Data Update {{ now()->format('d-m-Y') }}</div>
                 </div>
 
                 
-                <!-- Box 2 -->
+                <!-- Box 2: Survey Yang Sudah Diisi -->
                 <div class="bg-white shadow-lg rounded-lg p-4 md:p-6">
-                    <h3 class="text-base md:text-lg font-semibold text-gray-800 mb-2 md:mb-4">Customer Satisfaction</h3>
-                    <p class="text-2xl md:text-3xl font-bold text-green-500">89%</p>
-                    <div class="mt-1 md:mt-2 text-xs md:text-sm text-gray-500">Positive feedback rate</div>
+                    <h3 class="text-base md:text-lg font-semibold text-gray-800 mb-2 md:mb-4">Yang Sudah Mengisi</h3>
+                    <p class="text-2xl md:text-3xl font-bold text-green-500">{{ $totalSudahMengisi }}</p>
+                    <div class="mt-1 md:mt-2 text-xs md:text-sm text-gray-500">Dari {{ $totalMahasiswa }} total Mahasiswa</div>
                 </div>
 
-                <!-- Box 3 -->
+
+
+                <!-- Box 3: Survey Yang Belum Diisi -->
                 <div class="bg-white shadow-lg rounded-lg p-4 md:p-6">
-                    <h3 class="text-base md:text-lg font-semibold text-gray-800 mb-2 md:mb-4">Revenue Growth</h3>
-                    <p class="text-2xl md:text-3xl font-bold text-yellow-500">22%</p>
-                    <div class="mt-1 md:mt-2 text-xs md:text-sm text-gray-500">Increase from last quarter</div>
+                    <h3 class="text-base md:text-lg font-semibold text-gray-800 mb-2 md:mb-4">Yang Belum Mengisi</h3>
+                    <p class="text-2xl md:text-3xl font-bold text-red-500">{{ $totalBelumMengisi }}</p>
+                    <div class="mt-1 md:mt-2 text-xs md:text-sm text-gray-500">Dari {{ $totalMahasiswa }} total Mahasiswa</div>
                 </div>
+
 
                 <!-- Box 4 -->
                 <div class="bg-white shadow-lg rounded-lg p-4 md:p-6">
-                    <h3 class="text-base md:text-lg font-semibold text-gray-800 mb-2 md:mb-4">Active Users</h3>
-                    <p class="text-2xl md:text-3xl font-bold text-red-500">1,200</p>
-                    <div class="mt-1 md:mt-2 text-xs md:text-sm text-gray-500">Users online today</div>
+                    <h3 class="text-base md:text-lg font-semibold text-gray-800 mb-2 md:mb-4">User yang Sedang Active</h3>
+                    <p class="text-2xl md:text-3xl font-bold text-red-500">12 Orang</p>
+                    <div class="mt-1 md:mt-2 text-xs md:text-sm text-gray-500">Active Now</div>
                 </div>
 
             </div>
