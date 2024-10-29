@@ -90,4 +90,71 @@ class JadwalController extends Controller
                         ->with('success', 'Mata Kuliah berhasil diperbarui!');
     }
 
+    public function destroy($id)
+    {
+        // Cari jadwal berdasarkan ID dan hapus
+        $jadwal = Jadwal::findOrFail($id);  
+        $jadwal->delete();
+
+        // Redirect kembali ke halaman jadwal dengan pesan sukses
+        return redirect()->route('admin.jadwal', ['semester' => $jadwal->semester])
+                        ->with('success', 'Mata kuliah berhasil dihapus!');
+    }
+    public function manage(Request $request)
+    {
+    $semester = $request->input('semester', '1');
+    $semesters = range(1, 6);
+
+    // Ambil mata kuliah per kode, hanya pada semester yang dipilih
+    $jadwals = Jadwal::where('semester', $semester)
+        ->select('kode_matakuliah', 'nama_matakuliah')
+        ->groupBy('kode_matakuliah', 'nama_matakuliah')
+        ->get();
+
+    return view('admin.manage_matakuliah', compact('jadwals', 'semesters', 'semester'));
+    }
+    public function editByCode($kode_matakuliah, Request $request)
+    {
+        $semester = $request->input('semester');
+        $jadwals = Jadwal::where('kode_matakuliah', $kode_matakuliah)
+                        ->where('semester', $semester)
+                        ->get();
+        $dosens = Dosen::all();
+        $nama_matakuliah = $jadwals->first()->nama_matakuliah;
+
+        return view('admin.edit_matakuliah2', compact('jadwals', 'dosens', 'kode_matakuliah', 'nama_matakuliah', 'semester'));
+    }
+
+    public function updateByCode(Request $request, $kode_matakuliah)
+    {
+        $semester = $request->input('semester');
+        $request->validate([
+            'kode_matakuliah' => 'required|string|max:255',
+            'nama_matakuliah' => 'required|string|max:255',
+        ]);
+
+        Jadwal::where('kode_matakuliah', $kode_matakuliah)
+            ->where('semester', $semester)
+            ->update([
+                'nama_matakuliah' => $request->nama_matakuliah,
+
+            ]);
+
+        return redirect()->route('jadwal.manage', ['semester' => $semester])
+                        ->with('success', 'Mata kuliah berhasil diperbarui untuk semua kelas di semester tersebut!');
+    }
+
+    public function destroyByCode($kode_matakuliah, Request $request)
+    {
+        $semester = $request->input('semester');
+
+        Jadwal::where('kode_matakuliah', $kode_matakuliah)
+            ->where('semester', $semester)
+            ->delete();
+
+        return redirect()->route('jadwal.manage', ['semester' => $semester])
+                        ->with('success', 'Mata kuliah beserta semua kelasnya berhasil dihapus pada semester ini!');
+    }
+
+
 }

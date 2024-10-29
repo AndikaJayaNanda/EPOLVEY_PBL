@@ -21,6 +21,7 @@ class ProfilMahasiswa extends Model
         'prodi',
         'semester',
         'foto',
+        'kelas',
     ];
 
     // Menentukan kolom yang tidak dapat diisi

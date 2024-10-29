@@ -68,7 +68,12 @@
                     <p class="text-violet-600 font-medium">Semester</p>
                     <p class="text-gray-800">{{ $mahasiswa->semester }}</p>
                 </div>
+                <div class="bg-gradient-to-r from-green-50 to-green-100 p-4 rounded-xl border border-green-200">
+                    <p class="text-green-600 font-medium">Kelas</p>
+                    <p class="text-gray-800">{{ $mahasiswa->kelas }}</p>
+                </div>
             </div>
+
 
             <!-- Edit Button -->
             <div class="text-center">

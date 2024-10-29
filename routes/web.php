@@ -103,6 +103,15 @@ Route::prefix('admin')->middleware(['auth','role:Admin'])->group(function () {
         ->name('jadwal.edit');
     Route::put('/jadwal/{id}', [JadwalController::class, 'update'])
         ->name('jadwal.update');
+    Route::delete('/jadwal/{id}', [JadwalController::class, 'destroy'])
+        ->name('jadwal.destroy');
+    Route::get('/jadwal/manage', [JadwalController::class, 'manage'])
+        ->name('jadwal.manage');
+    Route::delete('/jadwal/{id}', [JadwalController::class, 'destroy'])
+        ->name('jadwal.destroy');
+    Route::get('/jadwal/edit/{kode_matakuliah}', [JadwalController::class, 'editByCode'])->name('jadwal.editByCode');
+    Route::delete('/jadwal/delete/{kode_matakuliah}', [JadwalController::class, 'destroyByCode'])->name('jadwal.destroyByCode');
+    Route::put('/jadwal/update-by-code/{kode_matakuliah}', [JadwalController::class, 'updateByCode'])->name('jadwal.updateByCode');
 
 
     Route::get('/profil', [AdminController::class, 'profil'])
@@ -119,6 +128,11 @@ Route::prefix('admin')->middleware(['auth','role:Admin'])->group(function () {
         ->name('admin.account_update');
     Route::delete('/accounts/{id}', [AccountController::class, 'destroy'])
         ->name('admin.account_delete');    
+
+    Route::get('admin/surveys/{survey}/questions/ikad/create', [SurveyController::class, 'addQuestionIkad'])
+        ->name('admin.add_question_ikad');
+    Route::post('admin/survey/{survey_id}/questions/ikad/store', [SurveyController::class, 'storeQuestionIkad'])
+        ->name('admin.store_question_ikad');
 
 });
 

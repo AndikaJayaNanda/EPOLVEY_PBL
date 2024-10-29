@@ -47,6 +47,7 @@ class MahasiswaController extends Controller
             'jurusan' => 'nullable|string|max:255',
             'prodi' => 'nullable|string|max:255',
             'semester' => 'required|in:1,2,3,4,5,6',
+            'kelas' => 'required|in:A,B,C,D,E', // Validasi kelas sebagai enum
             'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
     
@@ -80,6 +81,7 @@ class MahasiswaController extends Controller
             $user->email = $request->email;
             $user->email_verified_at = now();
         }
+        $profil->kelas = $request->kelas;
     
         $profil->save();
         $user->save();

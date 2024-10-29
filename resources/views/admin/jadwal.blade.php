@@ -15,6 +15,11 @@
             <a href="{{ route('jadwal.create') }}" class="text-white hover:bg-blue-800 bg-blue-600 px-4 md:px-6 py-2 rounded">
                 Tambah Mata Kuliah
             </a>
+            
+                <a href="{{ route('jadwal.manage') }}" class="text-white hover:bg-yellow-600 bg-yellow-400 px-4 md:px-6 py-2 rounded">
+                    Kelola Mata Kuliah
+                </a>
+           
         
             <!-- Form Dropdown -->
             <form action="{{ route('admin.jadwal') }}" method="GET" class="flex items-center">
@@ -56,6 +61,7 @@
                                 <td class="p-3 md:p-5 border-y border-l border-gray-300" rowspan="{{ $group->count() }}">
                                     {{ $firstJadwal->nama_matakuliah }}
                                 </td>
+                                
                                 <td class="border-y border-l border-gray-300 p-3 md:p-5">{{ $firstJadwal->dosen ? $firstJadwal->dosen->nama_dosen : 'Tidak Ada' }}</td>
                                 <td class="border-y border-l border-gray-300 p-3 md:p-5">{{ $firstJadwal->kelas }}</td>
                                 <td class="border-y border-l border-gray-300 p-3 md:p-5">
@@ -69,6 +75,7 @@
                                     <td class="border-y border-l border-gray-300 p-3 md:p-5">
                                         <a href="{{ route('jadwal.edit', $jadwal->id) }}" class="text-white hover:bg-blue-800 bg-blue-600 px-4 md:px-6 py-1 rounded">Edit</a>
                                     </td>
+                                    
                                 </tr>
                             @endforeach
                         @endforeach

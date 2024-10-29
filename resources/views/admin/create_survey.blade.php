@@ -33,10 +33,15 @@
                                     <td class="border border-gray-300 p-2">{{ $survey->nama }}</td>
                                     <td class="border border-gray-300 p-2">{{ $survey->updated_at->format('d M Y') }}</td>
                                     <td class="border border-gray-300 p-2">
-                                        <a href="{{ route('admin.pertanyaan', $survey->id) }}">
-                                            <button class="py-1 px-3 bg-blue-500 text-white rounded">Tambah Pertanyaan
-                                            </button>
-                                        </a>
+                                        @if($survey->jenis == 'IKAD')
+                                            <a href="{{ route('admin.add_question_ikad', $survey->id) }}">
+                                                <button class="py-1 px-3 bg-blue-500 text-white rounded">Tambah Pertanyaan IKAD</button>
+                                            </a>
+                                        @else
+                                            <a href="{{ route('admin.pertanyaan', $survey->id) }}">
+                                                <button class="py-1 px-3 bg-blue-500 text-white rounded">Tambah Pertanyaan</button>
+                                            </a>
+                                        @endif
                                     </td>
                                     <td class="border border-gray-300 p-2">
                                         <a href="{{ route('admin.edit_survey', $survey->id) }}">

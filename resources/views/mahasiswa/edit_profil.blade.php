@@ -44,6 +44,18 @@
                             <option value="6" {{ $mahasiswa->semester == '6' ? 'selected' : '' }}>6</option>
                         </select>
                     </div>
+                    <div class="mb-4">
+                        <label for="kelas" class="block text-sm font-medium text-gray-700">Kelas</label>
+                        <select id="kelas" name="kelas" required
+                                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                            <option value="A" {{ $profil->kelas === 'A' ? 'selected' : '' }}>A</option>
+                            <option value="B" {{ $profil->kelas === 'B' ? 'selected' : '' }}>B</option>
+                            <option value="C" {{ $profil->kelas === 'C' ? 'selected' : '' }}>C</option>
+                            <option value="D" {{ $profil->kelas === 'D' ? 'selected' : '' }}>D</option>
+                            <option value="E" {{ $profil->kelas === 'E' ? 'selected' : '' }}>E</option>
+                        </select>
+                    </div>
+                    
 
                     <div class="mb-6">
                         <label for="foto" class="block text-sm font-medium text-gray-700">Upload Foto Profil</label>
