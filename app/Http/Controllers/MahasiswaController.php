@@ -44,25 +44,29 @@ class MahasiswaController extends Controller
             'jurusan' => 'nullable|string|max:255',
             'prodi' => 'nullable|string|max:255',
             'semester' => 'required|in:1,2,3,4,5,6',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // validasi foto
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-
+    
         $profil = ProfilMahasiswa::findOrFail($id);
         $user = User::findOrFail($profil->id_user);
-        
+    
         // Cek jika ada foto baru yang diunggah
         if ($request->hasFile('foto')) {
             // Hapus foto lama jika ada
             if ($profil->foto) {
-                Storage::delete('public/' . $profil->foto);
+                Storage::delete('public/images/foto_profil/' . $profil->foto);
             }
-
-            // Simpan foto baru
-            $path = $request->file('foto')->store('images/foto_profil', 'public');
-
-            $profil->foto = str_replace('images/foto_profil/', '', $path);
+    
+            // Ambil file foto yang diunggah
+            $file = $request->file('foto');
+            // Buat nama file berdasarkan 'name' dan tambahkan ekstensi
+            $filename = $request->name . '.' . $file->getClientOriginalExtension();
+            // Simpan file ke direktori 'public/images/foto_profil' dengan nama yang sudah ditentukan
+            $file->storeAs('public/images/foto_profil', $filename);
+    
+            $profil->foto = $filename;
         }
-
+    
         // Update informasi lainnya
         $profil->name = $request->name;
         $profil->email = $request->email;
@@ -70,15 +74,15 @@ class MahasiswaController extends Controller
         $profil->prodi = $request->prodi;
         $profil->semester = $request->semester;
         if ($request->filled('email')) {
-            $user->email = $request->email; // Update email pengguna
+            $user->email = $request->email;
             $user->email_verified_at = now();
         }
-
+    
         $profil->save();
         $user->save();
-
-
+    
         return redirect()->route('mahasiswa.profil', ['id' => $profil->id])
-        ->with('success', 'Profil berhasil diperbarui.');    
+            ->with('success', 'Profil berhasil diperbarui.');
     }
+    
 }

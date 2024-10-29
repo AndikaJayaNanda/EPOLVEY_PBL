@@ -20,7 +20,6 @@
                             <tr>
                                 <th class="border border-gray-300 p-2 text-left">No</th>
                                 <th class="border border-gray-300 p-2 text-left">Judul Survey</th>
-                                <th class="border border-gray-300 p-2 text-left">Jml. Respon</th>
                                 <th class="border border-gray-300 p-2 text-left">Last Submit</th>
                                 <th class="border border-gray-300 p-2 text-left">View</th>
                                 <th class="border border-gray-300 p-2 text-left">Action</th>
@@ -32,7 +31,6 @@
                                 <tr>
                                     <td class="border border-gray-300 p-2">{{ $loop->iteration }}</td>
                                     <td class="border border-gray-300 p-2">{{ $survey->nama }}</td>
-                                    <td class="border border-gray-300 p-2">{{ $survey->responses_count ?? 0 }}</td>
                                     <td class="border border-gray-300 p-2">{{ $survey->updated_at->format('d M Y') }}</td>
                                     <td class="border border-gray-300 p-2">
                                         <a href="{{ route('admin.pertanyaan', $survey->id) }}">
