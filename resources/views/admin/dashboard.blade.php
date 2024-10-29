@@ -7,7 +7,7 @@
 
         <!-- Data Boxes Section -->
         <div class="bg-gray-100 flex items-start justify-center p-4 md:p-6">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 w-full max-w-7xl">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 w-full max-w-7xl">
 
                 <!-- Box 1 -->
                 <div class="bg-white shadow-lg rounded-lg p-4 md:p-6">
@@ -33,13 +33,6 @@
                     <div class="mt-1 md:mt-2 text-xs md:text-sm text-gray-500">Dari {{ $totalMahasiswa }} total Mahasiswa</div>
                 </div>
 
-
-                <!-- Box 4 -->
-                <div class="bg-white shadow-lg rounded-lg p-4 md:p-6">
-                    <h3 class="text-base md:text-lg font-semibold text-gray-800 mb-2 md:mb-4">User yang Sedang Active</h3>
-                    <p class="text-2xl md:text-3xl font-bold text-red-500">12 Orang</p>
-                    <div class="mt-1 md:mt-2 text-xs md:text-sm text-gray-500">Active Now</div>
-                </div>
 
             </div>
         </div>

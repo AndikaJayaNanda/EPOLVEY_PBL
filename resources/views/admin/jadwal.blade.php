@@ -6,10 +6,20 @@
     <div class="min-h-screen p-4 md:p-6 md:ml-64 block">
 
         <!-- Dropdown untuk Memilih Semester -->
-        <div class="bg-gray-100 p-4 md:p-6 rounded-lg shadow-lg mb-6">
-            <form action="{{ route('admin.jadwal') }}" method="GET">
-                <label for="semester" class="text-gray-700 font-semibold">Pilih Semester:</label>
-                <select name="semester" id="semester" onchange="this.form.submit()" class="ml-2 p-2 border rounded">
+        
+            
+
+        <!-- Tombol Tambah Mata Kuliah -->
+        <div class="mb-6 flex items-center space-x-4">
+            <!-- Tombol Tambah Mata Kuliah -->
+            <a href="{{ route('jadwal.create') }}" class="text-white hover:bg-blue-800 bg-blue-600 px-4 md:px-6 py-2 rounded">
+                Tambah Mata Kuliah
+            </a>
+        
+            <!-- Form Dropdown -->
+            <form action="{{ route('admin.jadwal') }}" method="GET" class="flex items-center">
+                <label for="semester" class="text-gray-700 font-semibold mr-2">Pilih Semester:</label>
+                <select name="semester" id="semester" onchange="this.form.submit()" class="p-2 border rounded">
                     @foreach ($semesters as $sem)
                         <option value="{{ $sem }}" {{ $sem == $semester ? 'selected' : '' }}>
                             Semester {{ $sem }}
@@ -18,11 +28,7 @@
                 </select>
             </form>
         </div>
-
-        <!-- Tombol Tambah Mata Kuliah -->
-        <div class="mb-6">
-            <a href="{{ route('jadwal.create') }}" class="text-white hover:bg-blue-800 bg-blue-600 px-4 md:px-6 py-2 rounded">Tambah Mata Kuliah</a>
-        </div>
+        
 
         <!-- Tabel Jadwal Kuliah -->
         <div class="mt-6 md:mt-10 bg-white p-4 md:p-6 rounded-lg shadow-lg w-full">
