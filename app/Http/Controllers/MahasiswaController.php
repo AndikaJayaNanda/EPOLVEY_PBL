@@ -12,12 +12,15 @@ class MahasiswaController extends Controller
 {
     public function index()
     {
-        return view('mahasiswa.dashboard');
+        // Fetch ongoing surveys to display on the dashboard
+        $surveys = Survey::where('status', 'berlangsung')->get();
+        return view('mahasiswa.dashboard', compact('surveys'));
+
+        
     }
     public function survey()
     {
-        $surveys = Survey::where('status', 'berlangsung')->get();
-        return view('mahasiswa.survey', compact('surveys'));
+        return view('mahasiswa.survey');
     }
 
 
