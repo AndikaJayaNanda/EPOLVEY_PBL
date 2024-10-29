@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -13,12 +14,14 @@ class User extends Authenticatable
         'email',
         'password',
         'role', 
+        'is_logged_in',
     ];
 
-    // Jika Anda ingin mengonversi kolom tertentu
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'is_logged_in' => 'boolean', // Pastikan ini ada
     ];
+
     public function profilMahasiswa()
     {
         return $this->hasOne(ProfilMahasiswa::class, 'user_id');
@@ -29,7 +32,7 @@ class User extends Authenticatable
         static::created(function ($user) {
             if ($user->role === 'Dosen') {
                 Dosen::create([
-                    'name' => $user->name,          // FK ke kolom name di users
+                    'name' => $user->name,
                     'email' => $user->email,
                 ]);
             }
@@ -39,9 +42,7 @@ class User extends Authenticatable
             if ($user->role === 'Dosen') {
                 Dosen::updateOrCreate(
                     ['name' => $user->name],
-                    [
-                        'email' => $user->email,
-                    ]
+                    ['email' => $user->email]
                 );
             }
         });
@@ -52,5 +53,4 @@ class User extends Authenticatable
             }
         });
     }
-    
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class LoginController extends Controller
 {
@@ -19,26 +20,25 @@ class LoginController extends Controller
 
     public function username()
     {
-        return 'username'; // This can remain as username or can be modified if needed
+        return 'username'; // Sesuaikan jika Anda menggunakan kolom lain untuk login
     }
 
     public function showLoginForm()
-{
-    if (Auth::check()) {
-        return $this->redirectToDashboard(Auth::user()->role);
+    {
+        if (Auth::check()) {
+            return $this->redirectToDashboard(Auth::user()->role);
+        }
+
+        // Mencegah caching halaman login
+        return response()
+            ->view('auth.login')
+            ->withHeaders([
+                'Cache-Control' => 'no-store, no-cache, must-revalidate, max-age=0',
+                'Pragma' => 'no-cache',
+                'Expires' => 'Sat, 01 Jan 2000 00:00:00 GMT',
+            ]);
     }
 
-    // Menambahkan header untuk mencegah caching halaman login
-    return response()
-        ->view('auth.login')
-        ->withHeaders([
-            'Cache-Control' => 'no-store, no-cache, must-revalidate, max-age=0',
-            'Pragma' => 'no-cache',
-            'Expires' => 'Sat, 01 Jan 2000 00:00:00 GMT',
-        ]);
-}
-
-    
     protected function authenticated(Request $request, $user)
     {
         $request->session()->regenerate();
@@ -55,7 +55,7 @@ class LoginController extends Controller
             'password' => 'required',
         ]);
 
-        // Determine if the username is an email
+        // Menentukan apakah username adalah email
         $credentials = [
             'password' => $request->password,
         ];
@@ -89,9 +89,11 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        return redirect('/login'); // Redirect to the login page or wherever you want
+
+        Auth::logout(); // Logout pengguna
+        $request->session()->invalidate(); // Invalidasi sesi
+        $request->session()->regenerateToken(); // Regenerasi token
+
+        return redirect('/login'); // Redirect ke halaman login
     }
 }

@@ -1,120 +1,112 @@
 @extends('layouts.app')
 @section('content')
 
-
-  <div class="antialiased sans-serif min-h-screen ">
+<div class="antialiased sans-serif min-h-screen">
     <div class="min-h-screen p-6 md:ml-64 block">
-      
-      {{-- Chart --}}
-      <div x-data="app()" x-cloak class="px-4">
-        <div class="w-full max-w-4xl mx-auto py-10">
-          <div class="shadow p-6 rounded-lg bg-white">
-            <div class="md:flex md:justify-between md:items-center">
-              <div>
-                <h2 class="text-xl text-gray-800 font-bold leading-tight">Product Sales</h2>
-                <p class="mb-2 text-gray-600 text-sm">Monthly Average</p>
-              </div>
-              <!-- Legends -->
-              <div class="mb-4">
-                <div class="flex items-center">
-                  <div class="w-96 h-2 bg-blue-600 mr-2 rounded-full"></div>
-                  <div class="text-sm text-gray-700">Sales</div>
-                </div>
-              </div>
-            </div>
-            <div class="line my-8 relative">
-              <!-- Tooltip -->
-              <template x-if="tooltipOpen == true">
-                <div x-ref="tooltipContainer" class="p-0 m-0 z-10 shadow-lg rounded-lg absolute h-auto block"
-                     :style="`bottom: ${tooltipY}px; left: ${tooltipX}px`">
-                  <div class="shadow-xs rounded-lg bg-white p-2">
-                    <div class="flex items-center justify-between text-sm">
-                      <div>Sales:</div>
-                      <div class="font-bold ml-2">
-                        <span x-html="tooltipContent"></span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </template>
-              <!-- Bar Chart -->
-              <div class="flex -mx-2 items-end mb-2">
-                <template x-for="(data, index) in chartData">
-                  <div class="px-2 w-1/6">
-                    <div :style="`height: ${data}px`"
-                         class="transition ease-in duration-200 bg-blue-600 hover:bg-blue-400 relative"
-                         @mouseenter="showTooltip($event); tooltipOpen = true"
-                         @mouseleave="hideTooltip($event)"
-                         @click="showDetails(index)">
-                      <div x-text="data" class="text-center absolute top-0 left-0 right-0 -mt-6 text-gray-800 text-sm"></div>
-                    </div>
-                  </div>
-                </template>
-              </div>
-              <!-- Labels -->
-              <div class="border-t border-gray-400 mx-auto" :style="`height: 1px; width: ${100 - 1/chartData.length*100 + 3}%`"></div>
-              <div class="flex -mx-2 items-end">
-                <template x-for="label in labels">
-                  <div class="px-2 w-1/6">
-                    <div class="bg-red-600 relative">
-                      <div class="text-center absolute top-0 left-0 right-0 h-2 -mt-px bg-gray-400 mx-auto" style="width: 1px"></div>
-                      <div x-text="label" class="text-center absolute top-0 left-0 right-0 mt-3 text-gray-700 text-sm"></div>
-                    </div>
-                  </div>
-                </template>  
-              </div>
-            </div>
-            <!-- Table Display for Chart Details -->
-            <div class="mt-8">
-              <h3 class="text-lg font-semibold text-gray-800" x-show="selectedData !== null">Selected Month Details</h3>
-              <table class="min-w-full leading-normal mt-4" x-show="selectedData !== null">
-                <thead>
-                  <tr>
-                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Month</th>
-                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Sales</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm" x-text="selectedLabel"></td>
-                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm" x-text="selectedData"></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
+
+        {{-- Dropdown Jenis Survey --}}
+        <div class="mb-6">
+            <label for="jenis-survey" class="text-gray-800 font-semibold">Pilih Jenis Survey:</label>
+            <select id="jenis-survey" class="form-select mt-1 block w-full" onchange="window.location.href = '?jenis=' + this.value">
+                <option value="">Pilih Jenis Survey</option>
+                @foreach ($surveyTypes as $type)
+                    <option value="{{ $type->jenis }}" {{ $selectedType == $type->jenis ? 'selected' : '' }}>{{ $type->jenis }}</option>
+                @endforeach
+            </select>
         </div>
-      </div>
+
+        {{-- Grafik --}}
+        <div x-data="app({{ json_encode($chartData) }})" x-cloak class="px-4">
+            <div class="w-full max-w-4xl mx-auto py-10">
+                <div class="shadow p-6 rounded-lg bg-white">
+                    <div class="md:flex md:justify-between md:items-center">
+                        <div>
+                            <h2 class="text-xl text-gray-800 font-bold leading-tight">Analisis Rata-rata Skor Survey</h2>
+                            <p class="mb-2 text-gray-600 text-sm">Rata-rata Skor Berdasarkan Survey (1-5)</p>
+                        </div>
+                    </div>
+                    <div class="line my-8 relative">
+                        <div class="flex -mx-2 items-end mb-2">
+                            <template x-for="(data, index) in chartData" :key="index">
+                                <div class="px-2 w-1/6">
+                                    <div :style="`height: ${((data.average_score - 1) / 4) * 100}px`" 
+                                         class="transition ease-in duration-200 bg-blue-600 hover:bg-blue-400 relative"
+                                         @mouseenter="showTooltip($event, data)" 
+                                         @mouseleave="hideTooltip()"
+                                         @click="fetchResponses(data.judul)">
+                                        <div x-text="data.average_score" 
+                                             class="text-center absolute top-0 left-0 right-0 -mt-6 text-gray-800 text-sm"></div>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                        <div class="border-t border-gray-400 mx-auto" :style="`height: 1px; width: ${100 - 1/chartData.length*100 + 3}%`"></div>
+                        <div class="flex -mx-2 items-end">
+                            <template x-for="data in chartData" :key="data.judul">
+                                <div class="px-2 w-1/6">
+                                    <div class="text-center text-gray-700 text-sm" 
+                                         x-text="data.judul + ' ' + data.tahun"></div>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                    <!-- Tabel Responden -->
+                    <div class="mt-6" x-show="responses.length > 0">
+                        <h3 class="text-lg font-semibold text-gray-800">Detail Responden</h3>
+                        <table class="min-w-full leading-normal mt-4">
+                            <thead>
+                                <tr>
+                                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Nama</th>
+                                    <template x-for="question in questions" :key="question.id">
+                                        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider" x-text="question.pertanyaan"></th>
+                                    </template>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template x-for="response in responses" :key="response.user_id">
+                                    <tr>
+                                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm" x-text="response.user_name"></td>
+                                        <template x-for="question in questions" :key="question.id">
+                                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm" x-text="response.answers[question.id]"></td>
+                                        </template>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
-  </div>
-  <script>
-    function app() {
-      return {
-        chartData: [112, 10, 225, 134, 101, 80, 50, 100, 200],
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
-        tooltipContent: '',
-        tooltipOpen: false,
-        tooltipX: 0,
-        tooltipY: 0,
-        selectedData: null,
-        selectedLabel: '',
-        showTooltip(e) {
-          this.tooltipContent = e.target.textContent;
-          this.tooltipX = e.target.offsetLeft - e.target.clientWidth;
-          this.tooltipY = e.target.clientHeight + e.target.clientWidth;
-        },
-        hideTooltip(e) {
-          this.tooltipContent = '';
-          this.tooltipOpen = false;
-          this.tooltipX = 0;
-          this.tooltipY = 0;
-        },
-        showDetails(index) {
-          this.selectedData = this.chartData[index];
-          this.selectedLabel = this.labels[index];
-        }
-      }
-    }
-  </script>
 </div>
+
+<script>
+    function app(chartData) {
+        return {
+            chartData: chartData,
+            questions: [],
+            responses: [],
+            tooltipContent: '',
+            tooltipOpen: false,
+            showTooltip(e, data) {
+                this.tooltipContent = data.average_score;
+            },
+            hideTooltip() {
+                this.tooltipContent = '';
+                this.tooltipOpen = false;
+            },
+            fetchResponses(surveyTitle) {
+                // Fetch responses based on the survey title (use AJAX to get data)
+                fetch(`/api/responses?survey=${surveyTitle}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        this.responses = data.responses; // set responses
+                        this.questions = data.questions; // set questions
+                    })
+                    .catch(error => console.error('Error fetching responses:', error));
+            },
+        }
+    }
+</script>
 @endsection

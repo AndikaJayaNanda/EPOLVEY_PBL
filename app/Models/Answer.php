@@ -25,4 +25,8 @@ class Answer extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function profileMahasiswa() // Ubah nama fungsi sesuai dengan relasi
+    {
+        return $this->belongsTo(ProfilMahasiswa::class, 'user_id'); // pastikan user_id adalah foreign key
+    }
 }

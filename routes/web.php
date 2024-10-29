@@ -9,6 +9,7 @@ use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\MahasiswaSurveyController;
 use App\Http\Controllers\PertanyaanController;
+use App\Http\Controllers\SurveyAnalysisController;
 use App\Http\Controllers\SurveyController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -48,8 +49,10 @@ Route::prefix('admin')->middleware(['auth','role:Admin'])->group(function () {
     Route::get('/manage-accounts', [AdminController::class, 'manage_accounts'])
         ->name('admin.manage_accounts');
 
-    Route::get('/analys-survey', [AdminController::class, 'analys_survey'])
-        ->name('admin.analys_survey');
+    //analys
+    Route::get('/surveys/analysis', [SurveyAnalysisController::class, 'index'])
+            ->name('admin.analys_survey');
+
     
     Route::get('/add_survey', [SurveyController::class, 'create'])
         ->name('admin.add_survey');
