@@ -39,6 +39,10 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 Route::prefix('admin')->middleware(['auth','role:Admin'])->group(function () {
     Route::get('/dashboard', [AdminController::class, 'index'])
         ->name('admin.dashboard');
+    Route::get('/admin/view-responses/{surveyId}', [AdminController::class, 'viewResponses'])
+        ->name('admin.viewResponses');
+    Route::get('/responses/export/{surveyId}', [AdminController::class, 'exportResponses'])
+        ->name('responses.export');
 
     Route::get('/create-survey', [AdminController::class, 'create_survey'])
         ->name('admin.create_survey');
@@ -129,8 +133,19 @@ Route::prefix('dosen')->middleware(['auth','role:Dosen'])->group(function () {
     Route::get('/result/detail', [DosenController::class, 'detail_result'])
         ->name('dosen.detail_result');
 
+    //profil
     Route::get('/profil', [DosenController::class, 'profil'])
         ->name('dosen.profil');
+        Route::get('/create', [DosenController::class, 'create'])
+        ->name('dosen.create');
+    Route::post('/', [DosenController::class, 'store'])
+        ->name('dosen.store');
+        Route::get('/dosen/profil/edit/{id}', [DosenController::class, 'edit'])
+        ->name('dosen.edit');
+    Route::put('/{dosen}', [DosenController::class, 'update'])
+        ->name('dosen.update');
+    Route::delete('/{dosen}', [DosenController::class, 'destroy'])
+        ->name('dosen.destroy');
 });
 
 Route::prefix('mahasiswa')->middleware(['auth','role:Mahasiswa'])->group(function () {

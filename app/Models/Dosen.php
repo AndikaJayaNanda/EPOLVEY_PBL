@@ -16,6 +16,7 @@ class Dosen extends Model
         'name',           // FK dari users
         'nama_dosen',
         'email',
+        'foto',
     ];
 
     // Relasi dengan model User

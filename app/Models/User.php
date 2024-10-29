@@ -24,7 +24,7 @@ class User extends Authenticatable
 
     public function profilMahasiswa()
     {
-        return $this->hasOne(ProfilMahasiswa::class, 'user_id');
+        return $this->hasOne(ProfilMahasiswa::class, 'id_user');
     }
 
     protected static function booted()

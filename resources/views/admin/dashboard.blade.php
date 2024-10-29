@@ -16,19 +16,15 @@
                     <div class="mt-1 md:mt-2 text-xs md:text-sm text-gray-500">Data Update {{ now()->format('d-m-Y') }}</div>
                 </div>
 
-                
-                <!-- Box 2: Survey Yang Sudah Diisi -->
                 <div class="bg-white shadow-lg rounded-lg p-4 md:p-6">
-                    <h3 class="text-base md:text-lg font-semibold text-gray-800 mb-2 md:mb-4">Yang Sudah Mengisi</h3>
+                    <h3 class="text-base md:text-lg font-semibold text-gray-800 mb-2 md:mb-4">Yang Sudah Mengisi (Survei Aktif)</h3>
                     <p class="text-2xl md:text-3xl font-bold text-green-500">{{ $totalSudahMengisi }}</p>
                     <div class="mt-1 md:mt-2 text-xs md:text-sm text-gray-500">Dari {{ $totalMahasiswa }} total Mahasiswa</div>
                 </div>
 
-
-
                 <!-- Box 3: Survey Yang Belum Diisi -->
                 <div class="bg-white shadow-lg rounded-lg p-4 md:p-6">
-                    <h3 class="text-base md:text-lg font-semibold text-gray-800 mb-2 md:mb-4">Yang Belum Mengisi</h3>
+                    <h3 class="text-base md:text-lg font-semibold text-gray-800 mb-2 md:mb-4">Yang Belum Mengisi (Survei Aktif)</h3>
                     <p class="text-2xl md:text-3xl font-bold text-red-500">{{ $totalBelumMengisi }}</p>
                     <div class="mt-1 md:mt-2 text-xs md:text-sm text-gray-500">Dari {{ $totalMahasiswa }} total Mahasiswa</div>
                 </div>
@@ -65,8 +61,9 @@
                                 @endif
                             </td>
                             <td class="py-2 px-3 md:px-4 border-b">
-                                <button class="text-white hover:bg-blue-800 bg-blue-600 px-4 md:px-6 py-1 rounded w-full sm:w-auto">View</button>
+                                <a href="{{ route('admin.viewResponses', $survey->id) }}" class="text-white hover:bg-blue-800 bg-blue-600 px-4 md:px-6 py-1 rounded w-full sm:w-auto">View</a>
                             </td>
+                            
                         </tr>
                         @endforeach
                     </tbody>
