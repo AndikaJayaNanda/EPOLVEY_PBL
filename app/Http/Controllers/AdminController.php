@@ -32,21 +32,26 @@ class AdminController extends Controller
     {
         return view('admin.analys_survey'); 
     }
-    public function manage_accounts()
+    public function manage_accounts(Request $request)
     {
+        $sortOrder = $request->input('sort') === 'oldest_update' ? 'asc' : 'desc';
+    
         $profils = User::leftJoin('profil_mahasiswa', 'users.id', '=', 'profil_mahasiswa.id_user')
-        ->leftJoin('dosen', 'users.name', '=', 'dosen.name')
-        ->select(
-            'users.id',
-            'users.role',
-            'users.name as username', // username dari tabel users
-            'profil_mahasiswa.name as mahasiswa_name', // nama lengkap mahasiswa
-            'dosen.nama_dosen as dosen_name' // nama lengkap dosen
-        )
-        ->paginate(6);
-
-        return view('admin.manage_accounts', compact('profils')); 
+            ->leftJoin('dosen', 'users.name', '=', 'dosen.name')
+            ->select(
+                'users.id',
+                'users.role',
+                'users.name as username',
+                'profil_mahasiswa.name as mahasiswa_name',
+                'dosen.nama_dosen as dosen_name',
+                'users.updated_at'
+            )
+            ->orderBy('users.updated_at', $sortOrder)
+            ->paginate(6);
+    
+        return view('admin.manage_accounts', compact('profils'));
     }
+    
     public function add_survey()
     {
         return view('admin.add_survey'); 
