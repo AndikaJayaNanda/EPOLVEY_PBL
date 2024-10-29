@@ -20,7 +20,10 @@ class MahasiswaController extends Controller
     }
     public function survey()
     {
-        return view('mahasiswa.survey');
+        $surveys = Survey::where('status', 'selesai')->get();
+
+        // Return view with completed surveys
+        return view('mahasiswa.surveys', compact('surveys'));
     }
 
 

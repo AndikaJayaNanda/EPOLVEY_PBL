@@ -27,4 +27,8 @@ class Jadwal extends Model
     {
         return $this->belongsTo(Dosen::class, 'name', 'name');
     }
+    public function profilMahasiswa()
+    {
+        return $this->belongsTo(ProfilMahasiswa::class, 'kelas', 'kelas');
+    }
 }

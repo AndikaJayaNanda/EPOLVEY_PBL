@@ -36,4 +36,8 @@ class ProfilMahasiswa extends Model
     {
         return $this->belongsTo(User::class, 'id');
     }
+    public function jadwal()
+    {
+        return $this->hasMany(Jadwal::class, 'kelas', 'kelas');
+    }
 }

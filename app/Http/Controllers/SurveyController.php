@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Jadwal;
 use App\Models\Survey;
 use App\Models\QuestionIkad; // Tambahkan ini
 use Illuminate\Http\Request;
@@ -73,30 +74,86 @@ class SurveyController extends Controller
     }
 
     public function addQuestionIkad($surveyId)
-    {
-        // Ambil survey berdasarkan ID
-        $survey = Survey::findOrFail($surveyId);
-        
-        return view('admin.add_question_ikad', compact('survey'));
-    }
-    public function storeQuestionIkad(Request $request, $surveyId)
 {
+    $survey = Survey::with('questions_ikad')->findOrFail($surveyId);
+    return view('admin.add_question_ikad', compact('survey'));
+}
+public function storeQuestionIkad(Request $request, $surveyId)
+{
+    $survey = Survey::findOrFail($surveyId);
+
+    $request->validate([
+        'pertanyaan.*' => 'required|string|max:255',
+        'jenis.*' => 'required|in:pilihan,essay',
+    ]);
+
+    // Dapatkan semua mata kuliah pada semester yang sama dengan survei
+    $matakuliahs = Jadwal::where('semester', $survey->semester)->get();
+
+    // Iterasi untuk setiap pertanyaan yang diinput
+    foreach ($request->pertanyaan as $index => $pertanyaanText) {
+        $jenisPertanyaan = $request->jenis[$index];
+
+        foreach ($matakuliahs as $matakuliah) {
+            // Simpan pertanyaan untuk setiap mata kuliah yang terkait
+            QuestionIkad::create([
+                'survey_id' => $surveyId,
+                'pertanyaan' => $pertanyaanText,
+                'jenis_pertanyaan' => $jenisPertanyaan,
+                'kode_matakuliah' => $matakuliah->kode_matakuliah, // Sesuaikan field 'kode' sesuai tabel Anda
+                'kelas' => $matakuliah->kelas, // Menambahkan kelas dari jadwal
+            ]);
+        }
+    }
+
+    return redirect()->route('admin.create_survey')->with('success', 'Pertanyaan berhasil ditambahkan ke semua mata kuliah pada semester tersebut.');
+}
+
+    public function editQuestion($id)
+    {
+        // Find the question by ID
+        $question = QuestionIkad::findOrFail($id);
+        return view('admin.edit_question_ikad', compact('question'));
+    }
+    
+    public function updateQuestion(Request $request, $id)
+{
+    // Find the question by ID
+    $question = QuestionIkad::findOrFail($id);
+
+    // Validate the input
     $request->validate([
         'pertanyaan' => 'required|string|max:255',
         'jenis_pertanyaan' => 'required|in:pilihan,essay',
-        'kode_matakuliah' => 'required|exists:jadwal,kode_matakuliah', // Sesuaikan dengan kolom yang ada
     ]);
 
-    // Simpan pertanyaan IKAD ke database
-    QuestionIkad::create([
-        'survey_id' => $surveyId,
+    // Update all questions with the same text
+    QuestionIkad::where('pertanyaan', $question->pertanyaan)->update([
         'pertanyaan' => $request->pertanyaan,
         'jenis_pertanyaan' => $request->jenis_pertanyaan,
-        'kode_matakuliah' => $request->kode_matakuliah,
     ]);
 
-    return redirect()->route('admin.create_survey')->with('success', 'Pertanyaan berhasil ditambahkan');
+    return redirect()->route('admin.add_question_ikad', $question->survey_id)
+                     ->with('success', 'Semua pertanyaan dengan teks yang sama telah diperbarui.');
 }
+
+    // In SurveyController.php
+
+    public function deleteQuestion($id)
+    {
+        // Find the question by ID
+        $question = QuestionIkad::findOrFail($id);
+        
+        // Store the survey ID to redirect after deletion
+        $surveyId = $question->survey_id;
+    
+        // Delete all questions with the same text
+        QuestionIkad::where('pertanyaan', $question->pertanyaan)->delete();
+    
+        return redirect()->route('admin.add_question_ikad', $surveyId)
+                         ->with('success', 'Semua pertanyaan dengan teks yang sama telah dihapus.');
+    }
+    
 
 
 }

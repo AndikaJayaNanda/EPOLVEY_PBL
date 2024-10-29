@@ -133,6 +133,12 @@ Route::prefix('admin')->middleware(['auth','role:Admin'])->group(function () {
         ->name('admin.add_question_ikad');
     Route::post('admin/survey/{survey_id}/questions/ikad/store', [SurveyController::class, 'storeQuestionIkad'])
         ->name('admin.store_question_ikad');
+    Route::get('/admin/question/edit/{id}', [SurveyController::class, 'editQuestion'])
+        ->name('admin.edit_question_ikad');
+    Route::put('/admin/question/update/{id}', [SurveyController::class, 'updateQuestion'])
+        ->name('admin.update_question');   
+    Route::delete('/admin/question/delete/{id}', [SurveyController::class, 'deleteQuestion'])
+        ->name('admin.delete_question');
 
 });
 
@@ -144,8 +150,9 @@ Route::prefix('dosen')->middleware(['auth','role:Dosen'])->group(function () {
     Route::get('/result', [DosenController::class, 'result'])
         ->name('dosen.result');
 
-    Route::get('/result/detail', [DosenController::class, 'detail_result'])
-        ->name('dosen.detail_result');
+        Route::get('/dosen/survey/{surveyId}/results', [DosenController::class, 'showSurveyResults'])
+            ->name('dosen.survey_result');
+
 
     //profil
     Route::get('/profil', [DosenController::class, 'profil'])
@@ -187,5 +194,10 @@ Route::prefix('mahasiswa')->middleware(['auth','role:Mahasiswa'])->group(functio
         ->name('mahasiswa.profil_edit');
     Route::put('/profil/{id}', [MahasiswaController::class, 'update'])
         ->name('mahasiswa.update_profil');
-        
+    Route::get('/surveys/{id}/answer', [MahasiswaSurveyController::class, 'answer'])
+        ->name('mahasiswa.survey.answer');
+    Route::post('/surveys/{id}/submit', [MahasiswaSurveyController::class, 'submitSurvey']) 
+        ->name('mahasiswa.survey.submit');
+    Route::post('/surveys/ikad/{id}/submit', [MahasiswaSurveyController::class, 'submitIkadSurvey'])
+        ->name('mahasiswa.survey.ikad.submit');
 });

@@ -1,8 +1,13 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\AnswerIkad;
 use App\Models\Dosen;
+use App\Models\Jadwal;
+use App\Models\QuestionIkad;
+use App\Models\Survey;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class DosenController extends Controller
@@ -13,12 +18,11 @@ class DosenController extends Controller
     }
     public function result()
     {
-        return view('dosen.result');
+        $surveys = Survey::where('jenis', 'IKAD')->get();
+        return view('dosen.results', compact('surveys'));
     }
-    public function detail_result()
-    {
-        return view('dosen.detail_result');
-    }
+
+    
     public function profil()
 {
     // Attempt to find the logged-in dosen by their ID
@@ -76,5 +80,59 @@ public function update(Request $request, $id)
 
     return redirect()->route('dosen.profil')->with('success', 'Profil berhasil diperbarui.');
 }
+
+public function showSurveyResults($surveyId)
+{
+    // Fetch the survey
+    $survey = Survey::findOrFail($surveyId);
+
+    // Get the logged-in lecturer's subjects (matakuliah)
+    $matakuliahs = Jadwal::where('name', auth()->user()->name)->pluck('kode_matakuliah');
+
+    // Fetch the answers from students that are in the classes taught by the lecturer
+    $answers = AnswerIkad::with('questionikad') // Include the question model
+        ->whereIn('id_pertanyaan', function($query) use ($matakuliahs) {
+            $query->select('id')
+                  ->from('question_ikad')
+                  ->whereIn('kode_matakuliah', $matakuliahs);
+        })
+        ->whereHas('questionikad', function($query) use ($surveyId) {
+            $query->where('survey_id', $surveyId);
+        })
+        ->get();
+
+    // Transform the answers into a pivot format
+    $data = $this->processPivotData($answers);
+
+    return view('dosen.survey_reslut', compact('survey', 'data'));
+}
+
+private function processPivotData($answers)
+{
+    $pivotData = [];
+
+    foreach ($answers as $answer) {
+        $matakuliah = $answer->questionikad->kode_matakuliah;
+        $pertanyaan = $answer->questionikad->pertanyaan;
+
+        // Initialize the row for this matakuliah if not already set
+        if (!isset($pivotData[$matakuliah])) {
+            $pivotData[$matakuliah] = [
+                'questions' => [],
+                'responses' => []
+            ];
+        }
+
+        // Add the question and response
+        if (!in_array($pertanyaan, $pivotData[$matakuliah]['questions'])) {
+            $pivotData[$matakuliah]['questions'][] = $pertanyaan;
+        }
+
+        $pivotData[$matakuliah]['responses'][$pertanyaan][] = $answer->jawaban ?? 'No answer provided';
+    }
+
+    return $pivotData;
+}
+
 
 }
