@@ -27,6 +27,11 @@ class User extends Authenticatable
         return $this->hasOne(ProfilMahasiswa::class, 'id_user');
     }
 
+    public function dosen()
+    {
+        return $this->hasOne(Dosen::class, 'name', 'id'); // Pastikan parameter kedua sesuai dengan kolom foreign key
+    }
+
     protected static function booted()
     {
         static::created(function ($user) {

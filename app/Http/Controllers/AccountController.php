@@ -19,7 +19,7 @@ class AccountController extends Controller
     public function store(Request $request)
 {
     $request->validate([
-        'name' => 'required|string|max:255',
+        'name' => 'required|string|min:10',
         'password' => 'required|string|min:6',
         'role' => 'required|in:Admin,Dosen,Mahasiswa',
     ]);

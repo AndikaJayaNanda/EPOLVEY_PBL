@@ -31,7 +31,7 @@
             <!-- Table -->
             <div class="overflow-x-auto bg-white shadow-lg rounded-lg">
                 <table id="studentTable" class="min-w-full bg-white border border-gray-200">
-                    <thead class="bg-gray-50">
+                    <thead class="">
                         <tr>
                             <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No</th>
                             <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Username</th>
@@ -42,10 +42,10 @@
                     </thead>
                     <tbody>
                         @foreach ($profils as $index => $profil)
-                        <tr data-updated="{{ $profil->updated_at }}">
-                            <td class="px-4 py-4 border-b border-gray-200"><td class="px-4 py-4 border-b border-gray-200">{{ $loop->iteration }}</td></td>
-                            <td class="px-4 py-4 border-b border-gray-200">{{ $profil->username }}</td>
-                            <td class="px-4 py-4 border-b border-gray-200">
+                        <tr data-updated="{{ $profil->updated_at }}" class="p-10">
+                            <td class=" py-4 border-b border-gray-200 px-4">{{ $loop->iteration }}</td>
+                            <td class=" py-4 border-b border-gray-200">{{ $profil->username }}</td>
+                            <td class=" py-4 border-b border-gray-200">
                                 @if($profil->role === 'Mahasiswa')
                                     {{ $profil->mahasiswa_name }}
                                 @elseif($profil->role === 'Dosen')

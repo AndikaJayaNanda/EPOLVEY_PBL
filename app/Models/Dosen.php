@@ -28,4 +28,5 @@ class Dosen extends Model
     {
         return $this->hasMany(Jadwal::class, 'name', 'name');
     }
+    
 }
