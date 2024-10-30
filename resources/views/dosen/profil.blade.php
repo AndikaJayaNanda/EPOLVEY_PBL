@@ -1,24 +1,24 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="ml-[250px] min-h-screen py-8 px-6">
+<div class="sm:ml-[250px] min-h-screen py-8 px-6">
     <div class="max-w-2xl mx-auto text-center mb-12" data-aos="fade-down">
         <h1 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Profil Dosen</h1>
         <div class="w-24 h-1 bg-gradient-to-r from-yellow-400 to-yellow-500 mx-auto rounded-full"></div>
     </div>
 
-    <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-indigo-50 max-w-2xl mx-auto" data-aos="fade-up">
+    <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-indigo-50 max-w-2xl mx-auto" data-aos="fade-up">
         <div class="mb-8 text-center">
             @if($dosen->foto)
                 <img src="{{ asset('storage/images/foto_profil/' . $dosen->foto) }}" 
                      alt="Foto Profil" 
-                     class="relative rounded-full w-32 h-32 object-cover border-4 border-white shadow-md">
+                     class="relative rounded-full w-32 h-32 object-cover border-4 border-white shadow-md mx-auto">
             @else
                 <div class="w-32 h-32 mx-auto rounded-full bg-gradient-to-r from-yellow-100 to-indigo-100 flex items-center justify-center">
                     <ion-icon name="person-circle-outline" class="text-4xl text-gray-400"></ion-icon>
                 </div>
             @endif
-            <h2 class="mt-4 text-2xl font-bold text-gray-800">{{ $dosen->nama_dosen ?? 'Tidak Ada Data' }}</h2>
+            <h2 class="mt-4 text-xl sm:text-2xl font-bold text-gray-800">{{ $dosen->nama_dosen ?? 'Tidak Ada Data' }}</h2>
         </div>
 
         <div class="grid grid-cols-1 gap-4 mb-6">

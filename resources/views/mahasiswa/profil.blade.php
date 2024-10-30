@@ -26,7 +26,7 @@
     </style>
 </head>
 <body class="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 min-h-screen">
-    <div class="ml-[250px] min-h-screen py-8 px-6">
+    <div class="sm:ml-[250px] min-h-screen py-8 px-6">
         <div class="max-w-2xl mx-auto text-center mb-12" data-aos="fade-down">
             <h1 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 font-poppins">Profil Mahasiswa</h1>
             <div class="w-24 h-1 bg-gradient-to-r from-yellow-400 to-yellow-500 mx-auto rounded-full"></div>
@@ -38,7 +38,7 @@
                 @if($mahasiswa->foto)
                     <div class="relative inline-block">
                         <div class="absolute inset-0 bg-gradient-to-r from-yellow-200 to-yellow-400 rounded-full blur-xl opacity-20"></div>
-                        <img src="{{ asset('storage/images/foto_profil/' . $mahasiswa->foto) }}" 
+                        <img src="{{ asset('storage/images/foto_profil' . $mahasiswa->foto) }}" 
                              alt="Foto Profil" 
                              class="relative rounded-full w-32 h-32 object-cover border-4 border-white shadow-md">
                     </div>

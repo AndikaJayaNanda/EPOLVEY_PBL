@@ -14,8 +14,21 @@ class DosenController extends Controller
 {
     public function index()
     {
-        return view('dosen.dashboard');
+        // Attempt to find the logged-in dosen by their ID or name
+        $dosen = Dosen::where('name', auth()->user()->name)->first();
+    
+        // If not found, create a new instance for the view
+        if (!$dosen) {
+            $dosen = new Dosen(); // Create a new instance to avoid null errors
+            $dosen->foto = null; // Set default values as needed
+            $dosen->nama_dosen = "Tidak Ada Data";
+            $dosen->email = "Tidak Ada Data";
+            // Add other default values if needed
+        }
+    
+        return view('dosen.dashboard', compact('dosen'));
     }
+    
     public function result()
     {
         $surveys = Survey::where('jenis', 'IKAD')->get();
