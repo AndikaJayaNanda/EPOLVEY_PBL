@@ -26,7 +26,7 @@
                     <option value="az">A-Z (Nama Mahasiswa)</option>
                     <option value="za">Z-A (Nama Mahasiswa)</option>
                 </select>
-            </div>
+            </div> 
 
             <!-- Table -->
             <div class="overflow-x-auto bg-white shadow-lg rounded-lg">
@@ -43,7 +43,7 @@
                     <tbody>
                         @foreach ($profils as $index => $profil)
                         <tr data-updated="{{ $profil->updated_at }}">
-                            <td class="px-4 py-4 border-b border-gray-200">{{ $index + 1 + ($profils->currentPage() - 1) * $profils->perPage() }}</td>
+                            <td class="px-4 py-4 border-b border-gray-200"><td class="px-4 py-4 border-b border-gray-200">{{ $loop->iteration }}</td></td>
                             <td class="px-4 py-4 border-b border-gray-200">{{ $profil->username }}</td>
                             <td class="px-4 py-4 border-b border-gray-200">
                                 @if($profil->role === 'Mahasiswa')
@@ -69,24 +69,7 @@
                 </table>
             </div>
 
-            <!-- Pagination Buttons -->
-            <div class="flex justify-center items-center mt-4">
-                @if ($profils->onFirstPage())
-                    
-                @else
-                    <a href="{{ $profils->previousPageUrl() }}" class="px-3 py-1 mx-1 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-lg">Previous</a>
-                @endif
-
-                @for ($page = 1; $page <= $profils->lastPage(); $page++)
-                    <a href="{{ $profils->url($page) }}" class="px-3 py-1 mx-1 {{ $page == $profils->currentPage() ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200' }} rounded-lg">{{ $page }}</a>
-                @endfor
-
-                @if ($profils->hasMorePages())
-                    <a href="{{ $profils->nextPageUrl() }}" class="px-3 py-1 mx-1 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-lg">Next</a>
-                @else
-                
-                @endif
-            </div>
+           
         </div>
     </div>
 </div>

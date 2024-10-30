@@ -13,29 +13,29 @@
                 </a>
             </div>
 
-            <div class="">
-                <div class="overflow-x-auto">
-                    <table class="min-w-full border-collapse border border-gray-300">
-                        <thead>
+            <div class="bg-white p-10 rounded-lg drop-shadow-lg">
+                <div class="overflow-x-auto bg-white rounded-lg">
+                    <table id="studentTable" class="min-w-full bg-white ">
+                        <thead class="bg-gray-50">
                             <tr>
-                                <th class="border border-gray-300 p-2 text-left">No</th>
-                                <th class="border border-gray-300 p-2 text-left">Judul Survey</th>
-                                <th class="border border-gray-300 p-2 text-left">Last Submit</th>
-                                <th class="border border-gray-300 p-2 text-left">View</th>
-                                <th class="border border-gray-300 p-2 text-left">Action</th>
-                                <th class="border border-gray-300 p-2 text-left">Ekspor</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Judul Survey</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider ">Last Submit</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">View</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Export</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($surveys as $survey)
                                 <tr>
-                                    <td class="border border-gray-300 p-2">{{ $loop->iteration }}</td>
-                                    <td class="border border-gray-300 p-2">{{ $survey->nama }}</td>
-                                    <td class="border border-gray-300 p-2">{{ $survey->updated_at->format('d M Y') }}</td>
-                                    <td class="border border-gray-300 p-2">
+                                    <td class=" p-4 px-4 py-4 border-b border-gray-200">{{ $loop->iteration }}</td>
+                                    <td class=" p-4 px-4 py-4 border-b border-gray-200">{{ $survey->nama }}</td>
+                                    <td class=" p-4 px-4 py-4 border-b border-gray-200 ">{{ $survey->updated_at->format('d M Y') }}</td>
+                                    <td class=" p-2 px-4 py-4 border-b border-gray-200"">
                                         @if($survey->jenis == 'IKAD')
                                             <a href="{{ route('admin.add_question_ikad', $survey->id) }}">
-                                                <button class="py-1 px-3 bg-blue-500 text-white rounded">Tambah Pertanyaan IKAD</button>
+                                                <button class="py-1 px-3 bg-blue-500 text-white rounded ">Tambah Pertanyaan IKAD</button>
                                             </a>
                                         @else
                                             <a href="{{ route('admin.pertanyaan', $survey->id) }}">
@@ -43,7 +43,7 @@
                                             </a>
                                         @endif
                                     </td>
-                                    <td class="border border-gray-300 p-2">
+                                    <td class=" p-2 px-4 py-4 border-b border-gray-200"">
                                         <a href="{{ route('admin.edit_survey', $survey->id) }}">
                                             <button class="py-1 px-3 bg-green-500 text-white rounded">
                                                 <ion-icon name="create-outline"></ion-icon>Edit
@@ -57,7 +57,7 @@
                                             </button>
                                         </form>
                                     </td>
-                                    <td class="border border-gray-300 p-2">
+                                    <td class=" p-2 px-4 py-4 border-b border-gray-200">
                                         <button class="py-1 px-3 bg-gray-200 rounded">Excel</button>
                                     </td>
                                 </tr>

@@ -3,21 +3,23 @@
 @section('content')
 <div class="antialiased sans-serif min-h-screen">
     <div class="min-h-screen p-4 md:p-6 md:ml-64 block">
-        <div class="container mx-auto p-4">
-            <h2 class="text-xl font-semibold mb-4">Responses</h2>
+        <div class="container mx-auto p-4"> 
+            <h2 class="text-xl font-semibold mb-9">Responses</h2>
+            <div class="flex justify-between">
+
+            {{-- !-- Tabel Respon untuk Pertanyaan Pilihan Ganda --> --}}
+            <h3 class="text-lg font-semibold">Responses (Pilihan Ganda)</h3>
 
             <!-- Tambahkan tombol untuk ekspor -->
-            <a href="{{ route('responses.export', $surveyId) }}" class="bg-blue-500 text-white px-4 py-2 rounded">Export to Excel</a>
-
-            <!-- Tabel Respon untuk Pertanyaan Pilihan Ganda -->
-            <h3 class="text-lg font-semibold mb-2">Responses (Pilihan Ganda)</h3>
+            <a href="{{ route('responses.export', $surveyId) }}" class="bg-green-500   rounded mb-4 p-3 px-6 text-center text-white">Export All</a>
+        </div>
             <table class="min-w-full bg-white border border-gray-300 text-sm">
                 <thead>
                     <tr class="bg-gray-200">
-                        <th class="py-2 px-3 border-b">Name</th>
-                        <th class="py-2 px-3 border-b">Nama Lengkap</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Lengkap</th>
                         @foreach($questions as $question)
-                            <th class="py-2 px-3 border-b">Pertanyaan {{ $question->id }}</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pertanyaan {{ $question->id }}</th>
                         @endforeach
                     </tr>
                 </thead>
@@ -45,9 +47,9 @@
             <table class="min-w-full bg-white border border-gray-300 text-sm">
                 <thead>
                     <tr class="bg-gray-200">
-                        <th class="py-2 px-3 border-b">Name</th>
-                        <th class="py-2 px-3 border-b">Nama Lengkap</th>
-                        <th class="py-2 px-3 border-b">Respon</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Lengkap</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Respon</th>
                     </tr>
                 </thead>
                 <tbody>

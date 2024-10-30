@@ -58,7 +58,7 @@ class AdminController extends Controller
                 'users.updated_at'
             )
             ->orderBy('users.updated_at', $sortOrder)
-            ->paginate(6);
+            ->get();
     
         return view('admin.manage_accounts', compact('profils'));
     }

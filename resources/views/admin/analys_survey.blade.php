@@ -6,8 +6,8 @@
 
         {{-- Dropdown Jenis Survey --}}
         <div class="mb-6">
-            <label for="jenis-survey" class="text-gray-800 font-semibold">Pilih Jenis Survey:</label>
-            <select id="jenis-survey" class="form-select mt-1 block w-full" onchange="window.location.href = '?jenis=' + this.value">
+            
+            <select id="jenis-survey" class="form-select mt-1 block w-48 p-3 rounded-lg" onchange="window.location.href = '?jenis=' + this.value">
                 <option value="">Pilih Jenis Survey</option>
                 @foreach ($surveyTypes as $type)
                     <option value="{{ $type->jenis }}" {{ $selectedType == $type->jenis ? 'selected' : '' }}>{{ $type->jenis }}</option>

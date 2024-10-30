@@ -2,7 +2,8 @@
 
 @section('content')
 
-<body class="bg-gray-100">
+<div class="antialiased sans-serif min-h-screen">
+    <div class="min-h-screen p-6 md:ml-64 block">
     <div class="flex-1 p-6 mx-auto max-w-6xl h-screen">
         <h1 class="text-2xl font-bold text-gray-800 text-center font-poppins" data-aos="fade-up">Detail Survei</h1>
 
