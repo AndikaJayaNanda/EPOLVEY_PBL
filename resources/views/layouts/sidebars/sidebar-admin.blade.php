@@ -6,7 +6,7 @@
                 <div class="flex items-center">
                     <img src="{{ asset('images/mysterious.png') }}" alt="User Image" class="w-16 h-16 rounded-full border-white filter invert">
                     <div class="ml-4">
-                        <h2 class="text-white text-xl font-semibold">{{ Auth::user()->name }}</h2>
+                        <h2 class="text-white text-xl font-semibold text-wrap">{{ Auth::user()->name }}</h2>
                         <p class="text-purple-200 text-sm">{{ Auth::user()->email }}</p>
                     </div>
                 </div>

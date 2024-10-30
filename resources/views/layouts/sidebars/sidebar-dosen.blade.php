@@ -4,13 +4,18 @@
         <div class="w-64 h-screen bg-white shadow-md">
             <div class="p-6 bg-gradient-to-r from-blue-600 to-purple-600 rounded-br-3xl">
                 <div class="flex items-center">
-                    <img src="{{ asset('images/mysterious.png') }}" alt="User Image" class="w-16 h-16 rounded-full border-white filter invert">
+                    @php
+                        $profile = Auth::user()->dosen; // Ambil data dosen dari user yang sedang login
+                    @endphp
+                    <img src="{{ $profile ? asset('storage/images/foto_profil/' . $profile->foto) : asset('images/default.png') }}" 
+                         alt="User Image" class="w-16 h-16 rounded-full border-white">
                     <div class="ml-4">
                         <h2 class="text-white text-xl font-semibold">{{ Auth::user()->name }}</h2>
                         <p class="text-purple-200 text-sm">{{ Auth::user()->email }}</p>
                     </div>
                 </div>
             </div>
+            
 
             <nav class="mt-8">
                 <ul>

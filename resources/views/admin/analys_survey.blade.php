@@ -6,7 +6,6 @@
 
         {{-- Dropdown Jenis Survey --}}
         <div class="mb-6">
-            
             <select id="jenis-survey" class="form-select mt-1 block w-48 p-3 rounded-lg" onchange="window.location.href = '?jenis=' + this.value">
                 <option value="">Pilih Jenis Survey</option>
                 @foreach ($surveyTypes as $type)
@@ -50,9 +49,9 @@
                             </template>
                         </div>
                     </div>
-                    <!-- Tabel Responden -->
-                    <div class="mt-6" x-show="responses.length > 0">
-                        <h3 class="text-lg font-semibold text-gray-800">Detail Responden</h3>
+                    <!-- Tabel Responden khusus IKAD -->
+                    <div class="mt-6" x-show="responses.length > 0 && '{{ $selectedType }}' === 'IKAD'">
+                        <h3 class="text-lg font-semibold text-gray-800">Detail Responden - IKAD</h3>
                         <table class="min-w-full leading-normal mt-4">
                             <thead>
                                 <tr>

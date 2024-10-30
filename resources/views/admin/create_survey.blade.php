@@ -23,7 +23,7 @@
                                 <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider ">Last Submit</th>
                                 <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">View</th>
                                 <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
-                                <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Export</th>
+                               
                             </tr>
                         </thead>
                         <tbody>
@@ -57,9 +57,7 @@
                                             </button>
                                         </form>
                                     </td>
-                                    <td class=" p-2 px-4 py-4 border-b border-gray-200">
-                                        <button class="py-1 px-3 bg-gray-200 rounded">Excel</button>
-                                    </td>
+                                   
                                 </tr>
                             @endforeach
                         </tbody>
